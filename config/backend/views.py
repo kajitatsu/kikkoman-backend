@@ -6,7 +6,7 @@ import json
 
 @csrf_exempt
 def all_restaurants(request):
-    if request.method == "POST":
+    if request.method == "GET":
         restaurants = Restaurant.objects.all().values()
         return JsonResponse(list(restaurants), safe=False)
     return JsonResponse({"error": "Invalid request method"}, status=400)
