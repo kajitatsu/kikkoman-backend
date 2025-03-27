@@ -17,10 +17,10 @@ COPY . .
 ENV PYTHONUNBUFFERED=1
 
 # Cloud Run が使用するポート番号を環境変数として定義
-ENV PORT=8080
+ENV PORT=8000
 
 # Cloud Run 上で使用されるポートを明示的に公開
-EXPOSE 8080
+EXPOSE 8000
 
 # アプリケーションの起動コマンド（WSGI を使用して Gunicorn 経由で起動）
 CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8080"]
