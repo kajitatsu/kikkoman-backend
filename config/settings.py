@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-2mxp9(nj$c)21jppo3da_gr0rkuy!5#!vezq=l=voqt9-f%!!u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    '*',
+    'https://kikkoman-backend-593024068353.asia-northeast1.run.app/backend'
+    ]
 
 
 # Application definition
@@ -79,6 +82,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Reactや他のフロントエンドのURL
     "https://example.com",
+    "https://kikkoman-backend-593024068353.asia-northeast1.run.app/backend"
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
