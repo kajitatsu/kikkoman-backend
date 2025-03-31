@@ -37,18 +37,27 @@ def search_restaurants(request):
 
             # こだわり条件による絞り込み
             feature_field_map = {
+                "乳幼児可": "infants_allowed",
+                "未就学児可": "preschoolers_allowed",
+                "小学生可": "elementary_schoolers_allowed",
                 "授乳室あり": "nursing_room",
-                "おむつ替え室あり": "diaper_changing_room",
+                "おむつ台あり": "diaper_change",
                 "ベビーカーあり": "stroller",
                 "ベビーチェアあり": "baby_chair",
                 "離乳食あり": "baby_food",
-                "離乳食持込可": "baby_food_allowed",
+                "離乳食持込可": "baby_food_ok",
                 "駐車場あり": "parking",
-                "掘りごたつあり": "sunken_kotatsu",
-                "お子様ランチあり": "kids_menu",
+                "掘りごたつあり": "horigotatsu",
+                "プレイゾーンあり": "play_zone",
+                "託児施設あり": "daycare_facility",
+                "お子様メニューあり": "kids_lunch",
                 "お子様割引あり": "kids_discount",
-                "おもちゃがもらえる": "toys_given",
-                "アレルギー対応可": "allergy_friendly",
+                "おもちゃがもらえる": "toy_present",
+                "アレルギー食対応可": "allergy_ok",
+                "タンパク質がとれる": "protein_rich",
+                "野菜が好きになる": "vegetable_like",
+                "野菜が食べれる": "vegetable_rich",
+                "減塩メニューあり": "low_salt",
             }
 
             for feature in features:
@@ -82,7 +91,7 @@ def search_by_location(request):
                 }
                 for r in all_restaurants
                 if r.latitude is not None and r.longitude is not None and
-                   haversine(latitude, longitude, float(r.latitude), float(r.longitude)) <= radius_km
+                    haversine(latitude, longitude, float(r.latitude), float(r.longitude)) <= radius_km
             ]
 
             # 距離でソート
@@ -95,6 +104,7 @@ def search_by_location(request):
                 "longitude": r["restaurant"].longitude,
                 "address": r["restaurant"].address,
                 "access": r["restaurant"].access_info,
+                "retty_id": r["restaurant"].retty_id,
                 "hours": "",  # 必要に応じて修正
                 "imageUrl": "",  # 必要に応じて修正
             } for r in nearby], safe=False)
@@ -125,18 +135,27 @@ def search_with_location_and_filters(request):
             longitude = float(data.get("longitude"))
 
             feature_field_map = {
+                "乳幼児可": "infants_allowed",
+                "未就学児可": "preschoolers_allowed",
+                "小学生可": "elementary_schoolers_allowed",
                 "授乳室あり": "nursing_room",
-                "おむつ替え室あり": "diaper_changing_room",
+                "おむつ台あり": "diaper_change",
                 "ベビーカーあり": "stroller",
                 "ベビーチェアあり": "baby_chair",
                 "離乳食あり": "baby_food",
-                "離乳食持込可": "baby_food_allowed",
+                "離乳食持込可": "baby_food_ok",
                 "駐車場あり": "parking",
-                "掘りごたつあり": "sunken_kotatsu",
-                "お子様ランチあり": "kids_menu",
+                "掘りごたつあり": "horigotatsu",
+                "プレイゾーンあり": "play_zone",
+                "託児施設あり": "daycare_facility",
+                "お子様メニューあり": "kids_lunch",
                 "お子様割引あり": "kids_discount",
-                "おもちゃがもらえる": "toys_given",
-                "アレルギー対応可": "allergy_friendly",
+                "おもちゃがもらえる": "toy_present",
+                "アレルギー食対応可": "allergy_ok",
+                "タンパク質がとれる": "protein_rich",
+                "野菜が好きになる": "vegetable_like",
+                "野菜が食べれる": "vegetable_rich",
+                "減塩メニューあり": "low_salt",
             }
 
             # 全店舗から半径5km以内にあるものを絞り込み
@@ -148,7 +167,7 @@ def search_with_location_and_filters(request):
                 }
                 for r in all_restaurants
                 if r.latitude is not None and r.longitude is not None and
-                   haversine(latitude, longitude, float(r.latitude), float(r.longitude)) <= 5
+                    haversine(latitude, longitude, float(r.latitude), float(r.longitude)) <= 5
             ]
 
             # 距離でソート
