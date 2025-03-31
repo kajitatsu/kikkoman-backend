@@ -86,7 +86,7 @@ CSRF_TRUSTED_ORIGINS = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Reactや他のフロントエンドのURL
     "https://example.com",
-    "https://kikkoman-backend-593024068353.asia-northeast1.run.app/backend"
+    "https://kikkoman-backend-593024068353.asia-northeast1.run.app"
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True

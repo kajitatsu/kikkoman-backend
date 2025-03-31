@@ -26,6 +26,12 @@ class Restaurant(models.Model):
     kids_discount = models.BooleanField(default=False, verbose_name="お子様割引有無")
     toys_given = models.BooleanField(default=False, verbose_name="おもちゃがもらえる")
     allergy_friendly = models.BooleanField(default=False, verbose_name="アレルギー対応可")
+    infants_allowed = models.BooleanField(default=False, verbose_name="乳幼児可")
+    preschoolers_allowed = models.BooleanField(default=False, verbose_name="未就学児可")
+    elementary_schoolers_allowed = models.BooleanField(default=False, verbose_name="小学生可")
+    play_zone = models.BooleanField(default=False, verbose_name="プレイゾーンあり")
+    daycare_facility = models.BooleanField(default=False, verbose_name="託児施設あり")
+    retty_id = models.IntegerField(null=True, blank=True, verbose_name="Retty ID")
 
     class Meta:
         verbose_name = "レストラン情報"
