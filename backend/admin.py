@@ -5,7 +5,7 @@ from .models import Restaurant, CommercialFacility
 @admin.register(Restaurant)
 class RestaurantAdmin(admin.ModelAdmin):
     list_display = (
-        "id", "name", "address", "latitude", "longitude", "access_info", 
+        "id", "name", "address", "retty_id", "latitude", "longitude", "access_info", 
         "commercial_facility", "nursing_room", "diaper_changing_room", 
         "stroller", "baby_chair", "baby_food", "baby_food_allowed", 
         "parking", "sunken_kotatsu", "kids_menu", "kids_discount", 

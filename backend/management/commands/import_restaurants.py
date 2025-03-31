@@ -21,7 +21,7 @@ class Command(BaseCommand):
                     longitude=float(row['longitude']),
                     access_info=row.get('access_info', ''),
                     commercial_facility_id=row.get('commercial_facility') or None,
-
+                    retty_id=row.get('retty_id', ''),
                     nursing_room=row.get('nursing_room', 'false').lower() == 'true',
                     diaper_changing_room=row.get('diaper_changing_room', 'false').lower() == 'true',
                     stroller=row.get('stroller', 'false').lower() == 'true',
