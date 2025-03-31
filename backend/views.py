@@ -76,18 +76,25 @@ def search_by_location(request):
 
             all_restaurants = Restaurant.objects.all()
             nearby = [
-                r for r in all_restaurants
+                {
+                    "restaurant": r,
+                    "distance": haversine(latitude, longitude, float(r.latitude), float(r.longitude))
+                }
+                for r in all_restaurants
                 if r.latitude is not None and r.longitude is not None and
-                    haversine(latitude, longitude, float(r.latitude), float(r.longitude)) <= radius_km
+                   haversine(latitude, longitude, float(r.latitude), float(r.longitude)) <= radius_km
             ]
 
+            # 距離でソート
+            nearby.sort(key=lambda x: x["distance"])
+
             return JsonResponse([{
-                "id": r.id,
-                "name": r.name,
-                "latitude": r.latitude,
-                "longitude": r.longitude,
-                "address": r.address,
-                "access": r.access_info,
+                "id": r["restaurant"].id,
+                "name": r["restaurant"].name,
+                "latitude": r["restaurant"].latitude,
+                "longitude": r["restaurant"].longitude,
+                "address": r["restaurant"].address,
+                "access": r["restaurant"].access_info,
                 "hours": "",  # 必要に応じて修正
                 "imageUrl": "",  # 必要に応じて修正
             } for r in nearby], safe=False)
@@ -134,15 +141,21 @@ def search_with_location_and_filters(request):
 
             # 全店舗から半径5km以内にあるものを絞り込み
             all_restaurants = Restaurant.objects.all()
-            nearby_restaurants = []
-            for r in all_restaurants:
-                if r.latitude is not None and r.longitude is not None:
-                    distance = haversine(latitude, longitude, float(r.latitude), float(r.longitude))
-                    if distance <= 5:
-                        nearby_restaurants.append(r)
+            nearby_restaurants = [
+                {
+                    "restaurant": r,
+                    "distance": haversine(latitude, longitude, float(r.latitude), float(r.longitude))
+                }
+                for r in all_restaurants
+                if r.latitude is not None and r.longitude is not None and
+                   haversine(latitude, longitude, float(r.latitude), float(r.longitude)) <= 5
+            ]
+
+            # 距離でソート
+            nearby_restaurants.sort(key=lambda x: x["distance"])
 
             # クエリセットとして扱うためにフィルタリング
-            queryset = Restaurant.objects.filter(id__in=[r.id for r in nearby_restaurants])
+            queryset = Restaurant.objects.filter(id__in=[r["restaurant"].id for r in nearby_restaurants])
 
             # フリーワード検索
             if freeword:
